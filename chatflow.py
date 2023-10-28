@@ -1,8 +1,18 @@
 import openai
 import os
+import tiktoken
 
-from qa_summary.retriever2qa import SummaryVectorIndex
+from summary_vector_index.retriever2qa import SummaryVectorIndex
 from constant import SUMMARY_PATH, VECTOR_PATH, INTENTION_PROMPT, SYSTEM_PROMPT_1, SYSTEM_PROMPT_2
+
+MODEL_NAME = "gpt-4-0613"
+
+
+def token_count(input_text: str):
+    encoder = tiktoken.encoding_for_model(MODEL_NAME)
+    encoded_text = encoder.encode(input_text)
+    token_nums = len(encoded_text)
+    return token_nums
 
 
 def get_intention_prompt(messages, prompt):
@@ -36,7 +46,7 @@ while True:
 
         intention_prompt = get_intention_prompt(messages, INTENTION_PROMPT)
         intention = openai.ChatCompletion.create(
-            model="gpt-4-0613",
+            model=MODEL_NAME,
             messages=[{"role": "user", "content": intention_prompt}],
         ).choices[0].message["content"]
         retrieve_summary = retriever.retrieve(intention)
@@ -48,12 +58,15 @@ while True:
                 whole_doc = whole_doc + "\n" + node.text
             whole_doc = whole_doc + "\n\n----------------\n\n"
 
+        if token_count(whole_doc) > 6000:
+            whole_doc = "无相关资料"
+
         system_line = {"role": "system", "content": SYSTEM_PROMPT_2.format(context=whole_doc)}
         messages.pop(0)
         messages.insert(0, system_line)
 
         completion = openai.ChatCompletion.create(
-            model="gpt-4-0613",
+            model=MODEL_NAME,
             messages=messages,
         )
         reply = completion.choices[0].message["content"]
