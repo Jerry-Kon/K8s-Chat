@@ -13,6 +13,7 @@ from llama_index import (
     StorageContext
 )
 from langchain.prompts import PromptTemplate
+from llama_index.embeddings import HuggingFaceEmbedding
 
 SUMMARY_PATH = "../store/posts_summary"
 VECTOR_PATH = "../store/posts_vector"
@@ -29,15 +30,14 @@ class SummaryVectorIndex:
         self.summary_ids = self.doc_summary_index.index_struct.summary_id_to_node_ids
         self.vector_path = vector_path
     def index_rebuild(self):
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-        openai.api_base = os.getenv('OPENAI_ENDPOINT')
         self.db2 = chromadb.PersistentClient(path=self.vector_path)
         self.chroma_collection = self.db2.get_or_create_collection("quickstart")
         self.vector_store = ChromaVectorStore(chroma_collection=self.chroma_collection)
+        embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-zh-v1.5") 
         self.service_context = ServiceContext.from_defaults(
-            # embed_model="local:BAAI/bge-small-en"
             chunk_size=5000,
-            llm=OpenAI()
+            llm=None,
+            embed_model=embed_model
         )
         self.index = VectorStoreIndex.from_vector_store(
             self.vector_store,

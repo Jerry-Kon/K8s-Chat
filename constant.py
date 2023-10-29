@@ -1,3 +1,5 @@
+MODEL_NAME = "gpt-4-0613"
+
 SUMMARY_PATH = "store/posts_summary"
 VECTOR_PATH = "store/posts_vector"
 
