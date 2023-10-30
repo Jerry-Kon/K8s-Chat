@@ -27,6 +27,6 @@ def vector_retriever(vector_path,similarity_top_k):
 
 
 if __name__ == "__main__" :
-    retriever = vector_retriever("../store/vector_store", 5)
+    retriever = vector_retriever("./store/vector_store", 5)
     result = retriever.retrieve("如何加速pod启动")
     print(result)
