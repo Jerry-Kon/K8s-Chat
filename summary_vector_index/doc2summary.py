@@ -12,7 +12,7 @@ from llama_index import (
     Document
 )
 
-SUMMARY_PATH = "../store/posts_summary"
+SUMMARY_PATH = "./store/posts_summary"
 
 logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
