@@ -12,7 +12,7 @@ documents = SimpleDirectoryReader(
 ).load_data()
 
 # save
-db = chromadb.PersistentClient(path="../store/vector_store")
+db = chromadb.PersistentClient(path="./store/vector_store")
 chroma_collection = db.get_or_create_collection("quickstart")
 vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
