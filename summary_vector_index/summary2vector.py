@@ -15,8 +15,8 @@ from llama_index import (
 )
 from llama_index.embeddings import HuggingFaceEmbedding
 
-SUMMARY_PATH = "../store/posts_summary"
-VECTOR_PATH = "../store/posts_vector"
+SUMMARY_PATH = "./store/posts_summary"
+VECTOR_PATH = "./store/posts_vector"
 
 logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
