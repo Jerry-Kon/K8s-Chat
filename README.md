@@ -1,4 +1,4 @@
-K8s-Chat is a project about k8s knowledge base chatbot\
+K8s-Chat is a project about k8s knowledge base chatbot 🤖\
 Prepare(option):
 ```
 python summary_vector_index/doc2summary.py
