@@ -44,7 +44,7 @@ class SummaryVectorIndex:
             service_context=self.service_context,
         )
         return self.index
-
+   
 if __name__ == "__main__":
     openai.api_key = os.getenv("OPENAI_API_KEY")
     openai.api_base = os.getenv('OPENAI_ENDPOINT')

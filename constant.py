@@ -1,7 +1,8 @@
-MODEL_NAME = "gpt-4-0613"
+MODEL_NAME = "gpt-3.5-turbo-16k"
 
 SUMMARY_PATH = "store/posts_summary"
 VECTOR_PATH = "store/posts_vector"
+VECTORINDEX_PATH = "store/vector_store"
 
 INTENTION_PROMPT = '''
 user和assistant正在讨论关于kubernetes的话题。
@@ -12,7 +13,9 @@ user和assistant正在讨论关于kubernetes的话题。
 user的最后一个原问题：
 user的问题完善1:
 user的问题完善2:
-user的问题完善3:
+回答user的问题所需要的知识：
+知识1：
+知识2：
 '''
 
 SYSTEM_PROMPT_1 = """
@@ -24,6 +27,7 @@ SYSTEM_PROMPT_2 = """
 你是一个kubernetes助手，你的回答基于事实，详细且准确。
 请使用与kubernetes相关的先验知识，并根据提供的信息来回答问题。
 可忽略与问题无关信息。
+不同来源的信息可能会有重复，它们之间由"----------------"分隔。
 目前已知信息如下：
 {context}
 """
