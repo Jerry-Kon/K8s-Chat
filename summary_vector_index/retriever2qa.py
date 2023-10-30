@@ -15,16 +15,14 @@ from llama_index import (
 from langchain.prompts import PromptTemplate
 from llama_index.embeddings import HuggingFaceEmbedding
 
-SUMMARY_PATH = "../store/posts_summary"
-VECTOR_PATH = "../store/posts_vector"
+SUMMARY_PATH = "./store/posts_summary"
+VECTOR_PATH = "./store/posts_vector"
 
 logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
 class SummaryVectorIndex:
     def __init__(self, summary_path, vector_path):
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-        openai.api_base = os.getenv('OPENAI_ENDPOINT')
         self.storage_context = StorageContext.from_defaults(persist_dir=summary_path)
         self.doc_summary_index = load_index_from_storage(self.storage_context)
         self.summary_ids = self.doc_summary_index.index_struct.summary_id_to_node_ids
