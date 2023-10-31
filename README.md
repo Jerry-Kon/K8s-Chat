@@ -1,4 +1,7 @@
+# K8s-Chat
 K8s-Chat is a project about k8s knowledge base chatbot 🤖\
+## Chat Flow
+
 Prepare(option):
 ```
 python summary_vector_index/doc2summary.py
