@@ -3,7 +3,7 @@ K8s-Chat is a project about k8s knowledge base chatbot 🤖
 ## Chat Flow
 The chat flow is shown in the fllowing firgue:
 <div align=center>
-<img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/chat_flow.png" width="800px">
+<img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/chat_flow.png" width="600px">
 </div>  
 
 ## Quick Start
