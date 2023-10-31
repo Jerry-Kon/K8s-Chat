@@ -1,7 +1,12 @@
 # K8s-Chat
-K8s-Chat is a project about k8s knowledge base chatbot 🤖\
+K8s-Chat is a project about k8s knowledge base chatbot 🤖
 ## Chat Flow
-![这是图片](https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/chat_flow.png "chat_flow")
+The chat flow is shown in the fllowing firgue:
+<div align=center>
+<img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/chat_flow.png" width="800px">
+</div>  
+
+## Quick Start
 Prepare(option):
 ```
 python summary_vector_index/doc2summary.py
