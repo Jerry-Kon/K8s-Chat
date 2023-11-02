@@ -8,7 +8,7 @@ First, a ``Query`` enters ``Chat history``. Then the ``Chat history`` is process
 
 ## Quick Start
 Prepare(option):  
-You can process your own documents(knowledge), by this method.
+Through the operation, you can process your own documents(knowledge), .
 ```
 python summary_vector_index/doc2summary.py
 python summary_vector_index/summary2vector.py
