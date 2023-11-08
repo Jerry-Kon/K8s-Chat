@@ -1,12 +1,7 @@
 import openai
 import os
-import tiktoken
 
-from llama_index import VectorStoreIndex, SimpleDirectoryReader, ServiceContext, load_index_from_storage
-from llama_index.vector_stores import ChromaVectorStore, FaissVectorStore
-from llama_index.storage.storage_context import StorageContext
-from llama_index.embeddings import HuggingFaceEmbedding
-import chromadb
+import tiktoken
 
 from vector_index.vectorindex_load import vector_retriever
 from summary_vector_index.retriever2qa import SummaryVectorIndex
@@ -33,14 +28,15 @@ openai.api_base = os.getenv('OPENAI_ENDPOINT')
 messages = []
 messages.append({"role": "system", "content": SYSTEM_PROMPT_1})
 
-sv_index_ = SummaryVectorIndex(SUMMARY_PATH, VECTOR_PATH)
+sv_index_ = SummaryVectorIndex(gpt=True)
 sv_index = sv_index_.index_rebuild()
 retriever_sv = sv_index.as_retriever(similarity_top_k=2)
 
-retriever_v = vector_retriever(VECTORINDEX_PATH, similarity_top_k=5)
+retriever_v = vector_retriever(similarity_top_k=5)
 
-print("可输入clear来清空聊天历史\n"
-      "可输入exit来退出聊天")
+print("#欢迎来到K8s-Chat，开始聊天吧！"
+      "#输入clear来清空聊天历史\n"
+      "#输入exit来退出聊天")
 
 while True:
     user_content = input("user: ")
@@ -67,12 +63,12 @@ while True:
                     break
             if token_count(whole_doc) > 12000:
                 break
-            whole_doc = whole_doc + "\n\n----------------\n\n"
+            whole_doc = whole_doc + "\n\n######\n\n"
         
         retrieve_vector = retriever_v.retrieve(intention)
         chunks = ""
         for chunk in retrieve_vector:
-            chunks = chunks + chunk.text +"\n\n----------------\n\n" 
+            chunks = chunks + chunk.text +"\n\n######\n\n"
         
         context = whole_doc + chunks
         #print(context)
