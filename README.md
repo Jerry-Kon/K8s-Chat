@@ -11,11 +11,11 @@ Prepare(option):
 Through the operation, you can process your own documents(knowledge), .
 ```
 python summary_vector_index/doc2summary.py
-python summary_vector_index/summary2vector.py
+python summary_vector_index/summary2vector_gpt.py
 ```
 Prepare:
 ```
-python vector_index/vectorindex_save.py
+python vector_index/vectorindex_save_gpt.py
 ```
 Usage: 
 ```
