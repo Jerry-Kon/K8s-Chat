@@ -2,7 +2,10 @@ MODEL_NAME = "gpt-3.5-turbo-16k"
 
 SUMMARY_PATH = "store/posts_summary"
 VECTOR_PATH = "store/posts_vector"
+VECTOR_GPT_PATH = "./store/posts_vector_gpt"
+
 VECTORINDEX_PATH = "store/vector_store"
+VECTORINDEX_GPT_PATH = "store/vector_store_gpt"
 
 INTENTION_PROMPT = '''
 user和assistant正在讨论关于kubernetes的话题。
@@ -27,7 +30,9 @@ SYSTEM_PROMPT_2 = """
 你是一个kubernetes助手，你的回答基于事实，详细且准确。
 请使用与kubernetes相关的先验知识，并根据提供的信息来回答问题。
 可忽略与问题无关信息。
-不同来源的信息可能会有重复，它们之间由"----------------"分隔。
+不同来源的信息可能会有重复，它们之间由"######"分隔。
 目前已知信息如下：
+###
 {context}
+###
 """
