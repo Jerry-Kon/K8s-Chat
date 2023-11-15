@@ -21,5 +21,5 @@ python vector_index/vectorindex_save_gpt.py #optional gpt vector
 ```
 Usage: 
 ```
-python chatflow.py
+python cli_demo.py
 ```
