@@ -9,8 +9,8 @@ from summary_vector_index.retriever2qa import SummaryVectorIndex
 from constant import *
 
 # count token numbers
-def token_count(input_text: str):
-    encoder = tiktoken.encoding_for_model(MODEL_NAME)
+def token_count(input_text: str, model):
+    encoder = tiktoken.encoding_for_model(model)
     encoded_text = encoder.encode(input_text)
     token_nums = len(encoded_text)
     return token_nums
@@ -30,10 +30,6 @@ if __name__ == "__main__":
     openai.api_key = os.getenv("OPENAI_API_KEY")
     openai.api_base = os.getenv('OPENAI_ENDPOINT')
 
-    # init system prompt
-    messages = []
-    messages.append({"role": "system", "content": SYSTEM_PROMPT_1})
-
     # init summary vector retriever
     sv_index_ = SummaryVectorIndex(gpt=True)
     sv_index = sv_index_.index_rebuild()
@@ -42,8 +38,7 @@ if __name__ == "__main__":
     # init vector retriever
     retriever_v = vector_retriever(similarity_top_k=5)
 
-
-    def respond(input, chat_history, source):
+    def respond(input, chat_history, model="gpt-3.5-turbo",temp=0):
         messages = []
         for mes in chat_history:
             messages.append({"role": "user", "content": mes[0]})
@@ -56,6 +51,7 @@ if __name__ == "__main__":
             model=MODEL_NAME,
             messages=[{"role": "user", "content": intention_prompt}],
         ).choices[0].message["content"]
+        print(intention)
 
         # get whole documents
         retrieve_summary = retriever_sv.retrieve(intention)
@@ -65,46 +61,44 @@ if __name__ == "__main__":
                 sv_index_.summary_ids[node.metadata["summary_id"]])
             for node in doc_nodes:
                 whole_doc = whole_doc + "\n" + node.text
-                if token_count(whole_doc) > 12000:
+                if token_count(whole_doc, model) > 12000:
                     break
-            if token_count(whole_doc) > 12000:
+            if token_count(whole_doc, model) > 12000:
                 break
             whole_doc = whole_doc + "\n\n######\n\n"
 
-        # get chunks
+        # add chunks
+        context = whole_doc
         retrieve_vector = retriever_v.retrieve(intention)
-        chunks = ""
         for chunk in retrieve_vector:
-            chunks = chunks + chunk.text + "\n\n######\n\n"
-
-        # concatenate documents and chunks
-        context = whole_doc + chunks
+            if token_count(chunk.text, model) > 16000:
+                break
+            context = context + chunk.text + "\n\n######\n\n"
+        print(context)
 
         system_line = {"role": "system", "content": SYSTEM_PROMPT_2.format(context=context)}
         messages.insert(0, system_line)
 
         # generate reply
         completion = openai.ChatCompletion.create(
-            model=MODEL_NAME,
+            model=model,
+            temperature=temp,
             messages=messages,
         )
         reply = completion.choices[0].message["content"]
 
-        chat_history.append((input, reply))
-        source.append(( input, intention+context))
+        return reply
 
-        return "", chat_history, source
+    with gr.Blocks(title="K8s-Chat") as demo:
 
-    with gr.Blocks() as demo:
-        with gr.Column(scale=2):
-            with gr.Row():
-                chatbot = gr.Chatbot(label="Chat")
-                source = gr.Chatbot(label="Source")
-            msg = gr.Textbox()
-            clear = gr.Button("clear")
-
-
-        msg.submit(respond, [msg, chatbot, source], [msg, chatbot, source])
-        clear.click(lambda: None, None, chatbot, queue=False)
+        gr.ChatInterface(
+            respond,
+            retry_btn=None,
+            undo_btn=None,
+            additional_inputs = [
+                gr.Radio(["gpt-3.5-turbo", "gpt-3.5-turbo-1106"], label="model"),
+                gr.Slider(0, 2, step=0.1, label="temperature"),
+            ]
+        )
 
     demo.launch()

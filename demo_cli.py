@@ -71,15 +71,13 @@ while True:
                 break
             whole_doc = whole_doc + "\n\n######\n\n"
 
-        # get chunks
+        # add chunks
+        context = whole_doc
         retrieve_vector = retriever_v.retrieve(intention)
-        chunks = ""
         for chunk in retrieve_vector:
-            chunks = chunks + chunk.text +"\n\n######\n\n"
-
-        # concatenate documents and chunks
-        context = whole_doc + chunks
-        #print(context)
+            if token_count(chunk.text) > 16000:
+                break
+            context = context + chunk.text +"\n\n######\n\n"
 
         # get new system prompt
         system_line = {"role": "system", "content": SYSTEM_PROMPT_2.format(context=context)}
