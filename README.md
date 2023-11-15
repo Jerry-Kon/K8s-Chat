@@ -7,19 +7,30 @@ The chat flow is shown in the following firgue:
 First, a ``Query`` enters ``Chat history``. Then the ``Chat history`` is processed through the ``LLM`` to get the Intent. The docs or chunks with high similarity to the intention is retrieved through the ``Retriever``. Use the search results to update the ``System prompt``. Finally, send the ``System prompt`` and ``Chat history`` to the ``LLM`` and get the relevant response, which will be part of the ``Chat history``. In general, the process repeats itself.
 
 ## Quick Start
-Prepare(option):  
-Through the operation, you can process your own documents(knowledge), .
-```
+### Prepare:  
+Through the operation, you can process your own documents(knowledge).  
+Generate summary vector index :
+```shell
 python summary_vector_index/doc2summary.py
 python summary_vector_index/summary2vector.py
 python summary_vector_index/summary2vector_gpt.py #optional gpt vector
 ```
-Prepare:
-```
+Generate vector index :
+```shell
 python vector_index/vectorindex_save.py
 python vector_index/vectorindex_save_gpt.py #optional gpt vector
 ```
-Usage: 
+### Usage: 
+Use CLI interface : 
+```shell
+python demo_cli.py
 ```
-python cli_demo.py
+Use Web UI interface :
+```shell
+python demo_webui.py
 ```
+## Developing
+New features are coming soon :rocket: :
++ API demo :zap: : Access the service through request.
++ Local model :fire: : Chat with local LLMs.
++ Fine-tuning model :art: : Fine-tuning model based on k8s.
