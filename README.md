@@ -29,8 +29,12 @@ Use Web UI interface :
 ```shell
 python demo_webui.py
 ```
+Use API interface :
+```shell
+python demo_api.py
+```
+
 ## Developing
 New features are coming soon :rocket: :
-+ API demo :zap: : Access the service through request.
 + Local model :fire: : Chat with local LLMs.
 + Fine-tuning model :art: : Fine-tuning model based on k8s.
