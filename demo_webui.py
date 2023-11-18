@@ -1,12 +1,12 @@
 import openai
 import os
 import gradio as gr
-
 import tiktoken
 
 from vector_index.vectorindex_load import vector_retriever
 from summary_vector_index.retriever2qa import SummaryVectorIndex
 from constant import *
+
 
 # count token numbers
 def token_count(input_text: str, model):
@@ -14,6 +14,7 @@ def token_count(input_text: str, model):
     encoded_text = encoder.encode(input_text)
     token_nums = len(encoded_text)
     return token_nums
+
 
 # get intention prompt
 def get_intention_prompt(messages, prompt):
@@ -33,12 +34,13 @@ if __name__ == "__main__":
     # init summary vector retriever
     sv_index_ = SummaryVectorIndex(gpt=True)
     sv_index = sv_index_.index_rebuild()
-    retriever_sv = sv_index.as_retriever(similarity_top_k=2)
+    retriever_sv = sv_index.as_retriever(similarity_top_k=3)
 
     # init vector retriever
     retriever_v = vector_retriever(similarity_top_k=5)
 
-    def respond(input, chat_history, model="gpt-3.5-turbo",temp=0):
+
+    def respond(input, chat_history, model="gpt-3.5-turbo", temp=0):
         messages = []
         for mes in chat_history:
             messages.append({"role": "user", "content": mes[0]})
@@ -89,13 +91,13 @@ if __name__ == "__main__":
 
         return reply
 
-    with gr.Blocks(title="K8s-Chat") as demo:
 
+    with gr.Blocks(title="K8s-Chat") as demo:
         gr.ChatInterface(
             respond,
             retry_btn=None,
             undo_btn=None,
-            additional_inputs = [
+            additional_inputs=[
                 gr.Radio(["gpt-3.5-turbo", "gpt-3.5-turbo-1106"], label="model"),
                 gr.Slider(0, 2, step=0.1, label="temperature"),
             ]

@@ -9,21 +9,20 @@ VECTORINDEX_GPT_PATH = "store/vector_store_gpt"
 
 INTENTION_PROMPT = '''
 user和assistant正在讨论关于kubernetes的话题。
-分析以下对话内容，检测user的意图，使对话之外的人能更好地理解。
+分析以下对话内容，检测user的意图，使对话之外的人能更好地理解，并且便于assistant回答。
 对话内容：
+###
 {history_str}
-你的回答格式为:
-```
-user的最后一个原问题：
 ###
-user的问题完善1:
-user的问题完善2:
-###
-回答user的问题所需要的知识：
-###
-知识1：
-知识2：
-###
+使用以下yaml格式回答:
+```yaml
+user的最后一个原问题： <>
+user的问题完善：#两个完善
+    - 完善1: <>
+    - 完善2: <>
+回答user的最后一个问题所需要的知识： #两个知识
+    - 知识1： <>
+    - 知识2： <>
 ```
 '''
 
