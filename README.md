@@ -21,15 +21,24 @@ python vector_index/vectorindex_save.py
 python vector_index/vectorindex_save_gpt.py #optional gpt vector
 ```
 ### Usage: 
-Use CLI interface : 
+#### CLI interface
+Run the CLI interface demo : 
 ```shell
 python demo_cli.py
 ```
-Use Web UI interface :
+Show CLI interface :
+<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_cli.png" width="300px"></div>  
+
+#### Web UI interface
+Run the Web UI interface demo:  
 ```shell
 python demo_webui.py
-```
-Use API interface :
+```  
+Show CLI interface :
+<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_webui.png" width="900px"></div> 
+
+#### API interface
+Use API interface demo:
 ```shell
 python demo_api.py
 ```
