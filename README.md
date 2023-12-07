@@ -1,5 +1,5 @@
 # K8s-Chat
-K8s-Chat is a project or chatbot :robot: with RAG function, which can answer questions related to kubernetes (k8s). Of course, you can also replace k8s with other fields of knowledge.	:sparkles:
+K8s-Chat is a project or chatbot with RAG function, which can answer questions related to kubernetes (k8s). Of course, you can also replace k8s with other fields of knowledge.
 ## Chat Flow
 The chat flow is shown in the following firgue:
 <div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/k8s-chat-flow-latest.png" width="550px"></div>  
