@@ -27,7 +27,7 @@ Run the CLI interface demo:
 python demo_cli.py
 ```
 Show CLI interface:
-<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_cli.png" width="400px"></div>  
+<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_cli.png" width="320px"></div>  
 
 #### Web UI interface
 Run the Web UI interface demo:  
@@ -37,7 +37,7 @@ python demo_webui.py
 Access Web UI, by local ip:port : <http://127.0.0.1:7860>  
 you can also publish service by set gtadio `launch(share=True)` and generate share link (expires in 72 hours).    
 Show Web UI interface :
-<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_webui.png" width="1000px"></div> 
+<div align=center><img src="https://github.com/Jerry-Kon/K8s-Chat/blob/main/image/demo_webui.png" width="1100px"></div> 
 
 #### API interface
 Use API interface demo:
