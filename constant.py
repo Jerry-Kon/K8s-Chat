@@ -9,20 +9,22 @@ VECTORINDEX_GPT_PATH = "store/vector_store_gpt"
 
 INTENTION_PROMPT = '''
 user和assistant正在讨论关于kubernetes的话题。
-分析以下对话内容，检测user的意图，使对话之外的人能更好地理解，并且便于assistant回答。
-对话内容：
+
+对话内容如下：
 ###
 {history_str}
 ###
-使用以下yaml格式回答:
+
+现在你需要帮助assistant理解user的意图，以便于assistant在知识库中查找资料，assistant将会使用这些资料来回答问题。
+
+使用以下yaml格式输出:
 ```yaml
 user的最后一个原问题： <>
-user的问题完善：#两个完善
-    - 完善1: <>
-    - 完善2: <>
-回答user的最后一个问题所需要的知识： #两个知识
-    - 知识1： <>
-    - 知识2： <>
+user的问题的补全：#补全原问题，脱离对话上下文也能理解其意图
+    - 补全1: <>
+查找内容： #列出两个查找资料所用的关键词或句子
+    - 内容1： <>
+    - 内容2： <>
 ```
 '''
 

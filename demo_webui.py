@@ -22,7 +22,10 @@ if __name__ == "__main__":
     retriever_v = vector_retriever(similarity_top_k=5)
 
     # main chat flow
-    def respond(input, chat_history, model="gpt-3.5-turbo-16k", temp=0.1):
+    def respond(input, chat_history, model, temp=0):
+        if model == None:
+            model = "gpt-3.5-turbo-16k"
+
         messages = []
         for mes in chat_history:
             messages.append({"role": "user", "content": mes[0]})
@@ -35,7 +38,7 @@ if __name__ == "__main__":
             model=MODEL_NAME,
             messages=[{"role": "user", "content": intention_prompt}],
         ).choices[0].message["content"]
-        # print(intention)
+        print(intention)
 
         # get whole documents
         retrieve_summary = retriever_sv.retrieve(intention)
@@ -44,7 +47,7 @@ if __name__ == "__main__":
         # add chunks
         retrieve_vector = retriever_v.retrieve(intention)
         context = get_context(whole_doc, retrieve_vector)
-        # print(context)
+        print(context)
 
         # generate system prompt
         system_line = {"role": "system", "content": SYSTEM_PROMPT_2.format(context=context)}
@@ -72,6 +75,6 @@ if __name__ == "__main__":
             gr.Slider(0, 2, step=0.1, label="temperature"),
         ],
         additional_inputs_accordion_name="Related configuration",
-        retry_btn=None,
-        undo_btn=None,
+        # retry_btn=None,
+        # undo_btn=None,
     ).queue().launch(share=True)

@@ -30,7 +30,7 @@ class History(BaseModel):
     text: list
 
 
-@app.post("/chat/")
+@app.post("/chat")
 async def chat(history: list):
     intention_prompt = get_intention_prompt(history, INTENTION_PROMPT)
     intention = openai.ChatCompletion.create(
