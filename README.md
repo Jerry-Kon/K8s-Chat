@@ -59,7 +59,7 @@ else:
     print("Error:", response.status_code, response.text)
 ```
 
-## Developing
+## Roadmap
 New features are coming soon :rocket::
 + Local model :fire:: Chat with local LLMs.
 + Fine-tuning model :art:: Fine-tuning model based on k8s.
